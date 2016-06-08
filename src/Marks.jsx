@@ -11,10 +11,6 @@ const Marks = ({className, vertical, marks, included, upperBound, lowerBound, ma
   const elements = marksKeys.map(parseFloat).sort((a, b) => a - b).map((point) => {
     const isActived = (!included && point === upperBound) ||
             (included && point <= upperBound && point >= lowerBound);
-    const markClassName = classNames({
-      [className + '-text']: true,
-      [className + '-text-active']: isActived,
-    });
 
     const bottomStyle = {
       // height: markWidth + '%',
@@ -36,6 +32,10 @@ const Marks = ({className, vertical, marks, included, upperBound, lowerBound, ma
     const markLabel = markPointIsObject ? markPoint.label : markPoint;
     const markStyle = markPointIsObject ?
             { ...style, ...markPoint.style } : style;
+    const markClassName = classNames({
+      [className + '-text']: true,
+      [className + '-text-active']: isActived,
+    }, markPointIsObject && markPoint.className);
     return (<span className={markClassName} style={markStyle} key={point}>
              {markLabel}
             </span>);
